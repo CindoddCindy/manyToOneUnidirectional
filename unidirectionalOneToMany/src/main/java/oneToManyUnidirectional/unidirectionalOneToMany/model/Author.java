@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "library")
-public class Library {
+@Table(name = "author")
+public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

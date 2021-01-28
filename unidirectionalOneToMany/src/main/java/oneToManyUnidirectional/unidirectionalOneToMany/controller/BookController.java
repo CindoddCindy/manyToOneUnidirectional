@@ -1,8 +1,10 @@
 package oneToManyUnidirectional.unidirectionalOneToMany.controller;
 
 
+import oneToManyUnidirectional.unidirectionalOneToMany.model.Author;
 import oneToManyUnidirectional.unidirectionalOneToMany.model.Book;
 import oneToManyUnidirectional.unidirectionalOneToMany.model.Library;
+import oneToManyUnidirectional.unidirectionalOneToMany.repository.AuthorRepository;
 import oneToManyUnidirectional.unidirectionalOneToMany.repository.BookRepository;
 import oneToManyUnidirectional.unidirectionalOneToMany.repository.LibraryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +25,25 @@ public class BookController {
     private final BookRepository bookRepository;
     private final LibraryRepository libraryRepository;
 
+
     @Autowired
     public BookController(BookRepository bookRepository, LibraryRepository libraryRepository) {
         this.bookRepository = bookRepository;
         this.libraryRepository = libraryRepository;
+         }
+/*
+    @Autowired
+    public  BookController( BookRepository bookRepository, AuthorRepository authorRepository){
+        this.bookRepository=bookRepository;
+        this.authorRepository=authorRepository;
     }
 
+
+ */
     @PostMapping
     public ResponseEntity<Book> create(@RequestBody @Valid Book book) {
         Optional<Library> optionalLibrary = libraryRepository.findById(book.getLibrary().getId());
-        if (!optionalLibrary.isPresent()) {
+        if (!optionalLibrary.isPresent() ) {
             return ResponseEntity.unprocessableEntity().build();
         }
 
@@ -44,6 +55,11 @@ public class BookController {
 
         return ResponseEntity.created(location).body(savedBook);
     }
+
+
+
+
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Book> update(@RequestBody @Valid Book book, @PathVariable Integer id) {
@@ -96,6 +112,11 @@ public class BookController {
     @GetMapping("/library/{libraryId}")
     public ResponseEntity<Page<Book>> getByLibraryId(@PathVariable Integer libraryId, Pageable pageable) {
         return ResponseEntity.ok(bookRepository.findByLibraryId(libraryId, pageable));
+    }
+
+    @GetMapping("/author/{authorId}")
+    public ResponseEntity<Page<Book>> getByAuthorId(@PathVariable Integer authorId,Pageable pageable){
+        return ResponseEntity.ok(bookRepository.findByAuthorId(authorId,pageable));
     }
 
 

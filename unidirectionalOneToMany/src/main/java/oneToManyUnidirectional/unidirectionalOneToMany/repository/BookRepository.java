@@ -14,8 +14,17 @@ import javax.transaction.Transactional;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Integer>{
     Page<Book> findByLibraryId(Integer libraryId, Pageable pageable);
+
+    Page<Book> findByAuthorId(Integer authorId, Pageable pageable);
+
+
     @Modifying
     @Transactional
     @Query("DELETE FROM Book b WHERE b.library.id = ?1")
     void deleteByLibraryId(Integer libraryId);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Book b WHERE b.author.id = ?1")
+    void deleteByAuthorId(Integer authorId);
 }
