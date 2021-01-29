@@ -21,10 +21,6 @@ public class Book {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Library library;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Author author;
 
 
 
@@ -52,11 +48,5 @@ public class Book {
         this.library = library;
     }
 
-    public Author getAuthor() {
-        return author;
-    }
 
-    public void setAuthor(Author author) {
-        this.author = author;
-    }
 }
